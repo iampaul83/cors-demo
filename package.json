@@ -2,13 +2,16 @@
   "name": "cors",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "prestart": "npm install",
+    "start": "DEBUG=cors-demo node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "debug": "^2.6.8",
     "express": "^4.15.3"
   }
 }

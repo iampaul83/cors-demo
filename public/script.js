@@ -1,16 +1,18 @@
-const opt2 = {
-    method: 'POST',
-    // credentials: 'include',
-    // headers: {
-    //     'X-QQ-QQQ': 'QQQQQ',
-    //     'X-QQ-QQQQ': 'QQQQQ',
-    // }
+const opt = {
+    method: 'GET',
+    headers: {
+        'X-Api-Key': 'sdfsdhfskdkgjfkgjk',
+        'X-Api-Key2': 'sdfsdhfskdkgjfkgjk',
+        'Origin': 'http://localhost:3009'
+    },
+    credentials: 'include'
 }
-fetch('http://localhost:3000/api', opt2)
-    .then((r) => {
-        console.log(r.headers.get("X-Powered-By"))
-        return r
-    })
+fetch('http://localhost:3000/api', opt)
     .then((r) => r.text())
-    .then(console.log)
-    .catch(console.error)
+    .then((data) => {
+        document.querySelector('body').innerHTML += data
+    })
+    .catch((err) => {
+        console.log(err)
+        document.querySelector('body').innerHTML += err
+    })

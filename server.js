@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const log = require('debug')('express-app')
+const log = require('debug')('cors-demo')
 
 app.use(express.static('public'))
 
@@ -9,26 +9,28 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use(function (req, res, next) {
-    if (req.method !== 'OPTIONS') {
-        next()
-        return
-    }
-    res.set('Access-Control-Allow-Origin', req.get('origin'))
-    //   res.set('Access-Control-Allow-Credentials', true)
-    res.set('Access-Control-Allow-Headers', req.get('access-control-request-headers'))
-    res.set('Access-Control-Allow-Methods', 'GET')
-    res.set('Access-Control-Max-Age', 86400)
-    res.sendStatus(200)
+app.options('/api', function (req, res) {
+  res.set('Access-Control-Allow-Origin', 'http://localhost:3001')
+  res.set('Access-Control-Allow-Methods', "OPTIONS")
+  var h = req.get('Access-Control-Request-Headers')
+  res.set('Access-Control-Allow-Headers', h)
+  res.set('Access-Control-Allow-Credentials', true)
+  res.send('Hello World!')
 })
 
 app.all('/api', function (req, res) {
-  res.cookie('cors', 'yoyo')
+//   res.cookie('cors', 'yoyo')
   res.set('Access-Control-Allow-Credentials', true)
-  res.set('Access-Control-Allow-Origin', '*')
+  res.set('Access-Control-Allow-Origin', 'http://localhost:3001')
   res.send('Hello World!')
 })
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
+})
+
+const app2 = express()
+app2.use(express.static('public'))
+app2.listen(3001, function () {
+  console.log('Example app2 listening on port 3001!')
 })
